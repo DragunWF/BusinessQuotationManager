@@ -12,14 +12,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.businessquotationapp.adapters.QuotationAdapter;
+import com.example.businessquotationapp.helpers.DatabaseHelper;
 import com.example.businessquotationapp.helpers.Utils;
+import com.example.businessquotationapp.services.QuotationService;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button manageBtn, addBtn;
     private Spinner categorySpinner;
     private SearchView searchBar;
+
+    private RecyclerView quotationRecycler;
+    private QuotationAdapter quotationAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        quotationAdapter.updateLocalDataSet();
+        DatabaseHelper.getQuotationBank().log();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +49,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         try {
+            DatabaseHelper.initialize(this);
+
             manageBtn = findViewById(R.id.manageBtn);
             addBtn = findViewById(R.id.addBtn);
             categorySpinner = findViewById(R.id.categorySpn);
             searchBar = findViewById(R.id.searchtxt);
+            quotationRecycler = findViewById(R.id.quotationRecycler);
 
             setSpinner();
             setButtons();
+            setRecycler();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -67,5 +87,15 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
         categorySpinner.setAdapter(adapter);
+    }
+
+    private void setRecycler() {
+        quotationRecycler.setHasFixedSize(false);
+
+        quotationAdapter = new QuotationAdapter(DatabaseHelper.getQuotationBank().getAll(), this);
+        quotationRecycler.setAdapter(quotationAdapter);
+
+        layoutManager = new LinearLayoutManager(this);
+        quotationRecycler.setLayoutManager(layoutManager);
     }
 }

@@ -56,13 +56,10 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/quotationlistView"
+            android:id="@+id/quotationRecycler"
             android:layout_width="360dp"
             android:layout_height="580dp"
-            android:layout_gravity="center"
-
-            />
-
+            android:layout_gravity="center" />
 
     </LinearLayout>
 

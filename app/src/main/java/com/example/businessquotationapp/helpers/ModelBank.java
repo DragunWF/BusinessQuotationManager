@@ -1,6 +1,7 @@
 package com.example.businessquotationapp.helpers;
 
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.example.businessquotationapp.data.Model;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ public class ModelBank<T extends Model> {
     public void add(T model) {
         List<T> models = getAll();
         model.setId(getLatestId());
+        models.add(model);
         save(models);
     }
 
@@ -68,6 +70,12 @@ public class ModelBank<T extends Model> {
         String json = gson.toJson(updatedModels);
         editor.putString(modelKey, json);
         editor.apply();
+    }
+
+    public void log() {
+        for (T model : getAll()) {
+            Log.e("DATA", model.toString());
+        }
     }
 
     private int getLatestId() {
