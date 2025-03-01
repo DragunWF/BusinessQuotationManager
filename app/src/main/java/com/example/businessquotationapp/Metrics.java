@@ -2,6 +2,7 @@ package com.example.businessquotationapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,11 +13,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.businessquotationapp.helpers.Utils;
+import com.example.businessquotationapp.services.QuotationService;
 
 public class Metrics extends AppCompatActivity {
 
     private Button backButton;
     private TextView conversionRateTxt, pendingAmountTxt, acceptedAmountTxt;
+    private int Accepted, Declined;
+    private double AcceptedRatio, DeclinedRatio;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,10 @@ public class Metrics extends AppCompatActivity {
             backButton = findViewById(R.id.returnBtn);
 
             setButton();
+            getAcceptedRatioPercentage();
+            getDeclinedRatioPercentage();
+            conversionRateTxt.setText("Accepted: " + AcceptedRatio +"%" + "Declined" + DeclinedRatio + "%");
+            pendingAmountTxt.setText(QuotationService.getPendingQuotationsCount());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -46,5 +54,20 @@ public class Metrics extends AppCompatActivity {
         backButton.setOnClickListener(v -> {
             startActivity(new Intent(Metrics.this, MainActivity.class));
         });
+    }
+    public void getAcceptedRatioPercentage(){
+        Accepted = QuotationService.getAcceptedQuotationsCount();
+        Declined = QuotationService.getDeclineQuotationsCount();
+
+        int Total = Accepted + Declined;
+        AcceptedRatio = (Accepted / Total) * 100;
+    }
+
+    public void getDeclinedRatioPercentage(){
+        Accepted = QuotationService.getAcceptedQuotationsCount();
+        Declined = QuotationService.getDeclineQuotationsCount();
+
+        int Total = Accepted + Declined;
+        DeclinedRatio = (Declined / Total) * 100;
     }
 }
