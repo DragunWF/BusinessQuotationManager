@@ -63,7 +63,7 @@ public class AddOrEdit extends AppCompatActivity {
                 autoFillFields();
             } else {
                 quotationNumberText.setText("Quotation Number: " + QuotationService.generateQuotationNumber());
-                totalAmountText.setText("Total Amount: " + DatabaseHelper.getQuotationBank().get(viewedQuotationId).getTotalAmount());
+                totalAmountText.setText("Total Amount: 0 PHP");
             }
 
             setButtons();
@@ -167,9 +167,7 @@ public class AddOrEdit extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int quantity = Integer.parseInt(Utils.getText(quantityText));
-                double price = Double.parseDouble(Utils.getText(priceText));
-                totalAmountText.setText("Total Amount: " + quantity * price + " PHP");
+                totalAmountText.setText("Total Amount: " + getTotalAmount() + " PHP");
             }
 
             @Override
@@ -185,9 +183,7 @@ public class AddOrEdit extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                int quantity = Integer.parseInt(Utils.getText(quantityText));
-                double price = Double.parseDouble(Utils.getText(priceText));
-                totalAmountText.setText("Total Amount: " + quantity * price + " PHP");
+                totalAmountText.setText("Total Amount: " + getTotalAmount() + " PHP");
             }
 
             @Override
@@ -195,5 +191,13 @@ public class AddOrEdit extends AppCompatActivity {
 
             }
         });
+    }
+
+    private double getTotalAmount() {
+        String quantityStr = Utils.getText(quantityText);
+        String priceStr = Utils.getText(priceText);
+        int quantity = quantityStr.isEmpty() ? 0 : Integer.parseInt(quantityStr);
+        double price = priceStr.isEmpty() ? 0 : Double.parseDouble(priceStr);
+        return quantity * price;
     }
 }

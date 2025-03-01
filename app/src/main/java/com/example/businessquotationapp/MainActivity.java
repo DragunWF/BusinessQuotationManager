@@ -2,6 +2,8 @@ package com.example.businessquotationapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -16,9 +18,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.businessquotationapp.adapters.QuotationAdapter;
+import com.example.businessquotationapp.data.Quotation;
 import com.example.businessquotationapp.helpers.DatabaseHelper;
 import com.example.businessquotationapp.helpers.Utils;
 import com.example.businessquotationapp.services.QuotationService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,6 +93,25 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
         categorySpinner.setAdapter(adapter);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected = adapter.getItem(position).toString();
+                List<Quotation> results = new ArrayList<>();
+                for (Quotation quotation : DatabaseHelper.getQuotationBank().getAll()) {
+                    if (quotation.getStatus().equals(selected)) {
+                        results.add(quotation);
+                    }
+                }
+                quotationAdapter.updateLocalDataSet(results);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     private void setRecycler() {
