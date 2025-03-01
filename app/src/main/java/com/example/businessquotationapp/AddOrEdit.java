@@ -183,7 +183,10 @@ public class AddOrEdit extends AppCompatActivity {
         // Apply the adapter to the spinner.
         statusSpinner.setAdapter(adapter);
 
-        statusSpinner.setSelection(adapter.getPosition(DatabaseHelper.getQuotationBank().get(viewedQuotationId).getStatus()));
+        boolean isEditForm = viewedQuotationId != -1;
+        if (isEditForm) {
+            statusSpinner.setSelection(adapter.getPosition(DatabaseHelper.getQuotationBank().get(viewedQuotationId).getStatus()));
+        }
     }
 
     private void setTextWatchers() {
