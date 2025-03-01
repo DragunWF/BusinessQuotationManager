@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">BusinessQuotationApp</string>
     <string-array name="status_array">
+        <item>Uncategorized</item>
         <item>Draft</item>
         <item>Sent</item>
         <item>Accepted</item>

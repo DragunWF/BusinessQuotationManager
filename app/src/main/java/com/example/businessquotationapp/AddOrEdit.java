@@ -26,6 +26,7 @@ public class AddOrEdit extends AppCompatActivity {
     private EditText nameText, phoneNumberText, itemNameText, quantityText, dateText, priceText;
     private Spinner statusSpinner;
 
+    private int quotationNumber;
     private int viewedQuotationId; // -1 for no quotation viewed
 
     @Override
@@ -62,8 +63,9 @@ public class AddOrEdit extends AppCompatActivity {
             if (viewedQuotationId != -1) {
                 autoFillFields();
             } else {
-                quotationNumberText.setText("Quotation Number: " + QuotationService.generateQuotationNumber());
-                totalAmountText.setText("Total Amount: 0 PHP");
+                quotationNumber = QuotationService.generateQuotationNumber();
+                quotationNumberText.setText("Quotation Number: " + quotationNumber);
+                totalAmountText.setText("Total Amount: 0.0 PHP");
             }
 
             setButtons();
@@ -94,7 +96,9 @@ public class AddOrEdit extends AppCompatActivity {
             finish();
         });
         deleteBtn.setOnClickListener(v ->{
-
+            QuotationService.deleteQuotation(viewedQuotationId);
+            Utils.longToast("Quotation deleted successfully!", AddOrEdit.this);
+            finish();
         });
         saveBtn.setOnClickListener(v -> {
             final int CHAR_LIMIT = 500;
@@ -136,7 +140,7 @@ public class AddOrEdit extends AppCompatActivity {
                 QuotationService.editQuotation(quotation);
             } else {
                 Quotation quotation = new Quotation(customerName, phoneNumber, item, status,
-                        date, formattedPrice, 1, formattedQuantity);
+                        date, formattedPrice, quotationNumber, formattedQuantity);
                 QuotationService.addQuotation(quotation);
             }
 

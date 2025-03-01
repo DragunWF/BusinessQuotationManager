@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
             setSpinner();
             setButtons();
             setRecycler();
-
-            DatabaseHelper.addDummyData();
+            setSearch();
         }
         catch (Exception e){
             e.printStackTrace();
@@ -99,14 +98,18 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected = adapter.getItem(position).toString();
-                List<Quotation> results = new ArrayList<>();
-                for (Quotation quotation : DatabaseHelper.getQuotationBank().getAll()) {
-                    if (quotation.getStatus().equals(selected)) {
-                        results.add(quotation);
+                if (position == 0) {
+                    quotationAdapter.updateLocalDataSet(DatabaseHelper.getQuotationBank().getAll());
+                } else {
+                    String selected = adapter.getItem(position).toString();
+                    List<Quotation> results = new ArrayList<>();
+                    for (Quotation quotation : DatabaseHelper.getQuotationBank().getAll()) {
+                        if (quotation.getStatus().equals(selected)) {
+                            results.add(quotation);
+                        }
                     }
+                    quotationAdapter.updateLocalDataSet(results);
                 }
-                quotationAdapter.updateLocalDataSet(results);
             }
 
             @Override
@@ -124,5 +127,36 @@ public class MainActivity extends AppCompatActivity {
 
         layoutManager = new LinearLayoutManager(this);
         quotationRecycler.setLayoutManager(layoutManager);
+    }
+
+    private void setSearch() {
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                update(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                update(newText);
+                return false;
+            }
+
+            public void update(String query) {
+                List<Quotation> quotations = DatabaseHelper.getQuotationBank().getAll();
+                List<Quotation> results = new ArrayList<>();
+
+                query = query.toLowerCase();
+                for (Quotation quotation : quotations) {
+                    String customerName = quotation.getCustomerName().toLowerCase();
+                    if (customerName.contains(query)) {
+                        results.add(quotation);
+                    }
+                }
+
+                quotationAdapter.updateLocalDataSet(results);
+            }
+        });
     }
 }

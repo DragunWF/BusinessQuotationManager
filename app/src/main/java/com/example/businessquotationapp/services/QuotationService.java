@@ -25,4 +25,23 @@ public class QuotationService {
         ModelBank<Quotation> bank = DatabaseHelper.getQuotationBank();
         bank.delete(quotationId);
     }
+
+    public static int getAcceptedQuotationsCount() {
+        return getStatusCount("Accepted");
+    }
+
+    public static int getDeclineQuotationsCount() {
+        return getStatusCount("Declined");
+    }
+
+    private static int getStatusCount(String status) {
+        ModelBank<Quotation> bank = DatabaseHelper.getQuotationBank();
+        int count = 0;
+        for (Quotation quotation : bank.getAll()) {
+            if (quotation.getStatus().equals(status)) {
+                count++;
+            }
+        }
+        return count;
+    }
 }
