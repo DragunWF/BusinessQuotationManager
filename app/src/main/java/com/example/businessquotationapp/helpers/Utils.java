@@ -1,6 +1,7 @@
 package com.example.businessquotationapp.helpers;
 
 import android.content.Context;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class Utils {
@@ -10,5 +11,9 @@ public class Utils {
 
     public static void toast(String message, Context context) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public static String getText(EditText text) {
+        return String.valueOf(text.getText());
     }
 }

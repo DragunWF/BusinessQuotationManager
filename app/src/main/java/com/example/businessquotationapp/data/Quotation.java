@@ -2,17 +2,17 @@ package com.example.businessquotationapp.data;
 
 public class Quotation extends Model {
     private String customerName, phone, item, status, date;
-    private double price, totalAmount;
-    private int quantity;
+    private double price;
+    private int quotationNumber, quantity;
 
-    public Quotation(String customerName, String phone, String item, String status, String date, double price, double totalAmount, int quantity) {
+    public Quotation(String customerName, String phone, String item, String status, String date, double price, int quotationNumber, int quantity) {
         this.customerName = customerName;
         this.phone = phone;
         this.item = item;
         this.status = status;
         this.date = date;
         this.price = price;
-        this.totalAmount = totalAmount;
+        this.quotationNumber = quotationNumber;
         this.quantity = quantity;
     }
 
@@ -25,12 +25,17 @@ public class Quotation extends Model {
                 ", status='" + status + '\'' +
                 ", date='" + date + '\'' +
                 ", price=" + price +
-                ", totalAmount=" + totalAmount +
                 ", quantity=" + quantity +
                 ", id=" + id +
                 '}';
     }
 
+    // Dynamic Getters
+    public double getTotalAmount() {
+        return price * quantity;
+    }
+
+    // Setters and Getters
     public String getCustomerName() {
         return customerName;
     }
@@ -79,19 +84,19 @@ public class Quotation extends Model {
         this.price = price;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public int getQuotationNumber() {
+        return quotationNumber;
+    }
+
+    public void setQuotationNumber(int quotationNumber) {
+        this.quotationNumber = quotationNumber;
     }
 }
