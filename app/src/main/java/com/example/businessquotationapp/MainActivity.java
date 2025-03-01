@@ -17,10 +17,9 @@ import com.example.businessquotationapp.helpers.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button manage, add;
-    private Spinner category;
-    private SearchView search;
-
+    private Button manageBtn, addBtn;
+    private Spinner categorySpinner;
+    private SearchView searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        try{
-            manage.findViewById(R.id.manageBtn);
-            add.findViewById(R.id.addBtn);
-            category.findViewById(R.id.categorySpn);
-            search.findViewById(R.id.searchtxt);
+        try {
+            manageBtn = findViewById(R.id.manageBtn);
+            addBtn = findViewById(R.id.addBtn);
+            categorySpinner = findViewById(R.id.categorySpn);
+            searchBar = findViewById(R.id.searchtxt);
 
             setSpinner();
             setButtons();
@@ -49,24 +48,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setButtons(){
-        manage.setOnClickListener(v -> {
+        manageBtn.setOnClickListener(v -> {
 
         });
-        add.setOnClickListener(v -> {
-
+        addBtn.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, AddOrEdit.class));
         });
     }
 
     public void setSpinner(){
-// Create an ArrayAdapter using the string array and a default spinner layout.
+        // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.status_array,
                 android.R.layout.simple_spinner_item
         );
-// Specify the layout to use when the list of choices appears.
+        // Specify the layout to use when the list of choices appears.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Apply the adapter to the spinner.
-        category.setAdapter(adapter);
+        // Apply the adapter to the spinner.
+        categorySpinner.setAdapter(adapter);
     }
 }
