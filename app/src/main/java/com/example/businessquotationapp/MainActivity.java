@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setButtons(){
         manageBtn.setOnClickListener(v -> {
-
+            startActivity(new Intent(MainActivity.this, Metrics.class));
         });
         addBtn.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, AddOrEdit.class));

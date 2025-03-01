@@ -5,6 +5,12 @@ import com.example.businessquotationapp.helpers.DatabaseHelper;
 import com.example.businessquotationapp.helpers.ModelBank;
 
 public class QuotationService {
+    public static int generateQuotationNumber() {
+        int max = 99999;
+        int min = 10000;
+        return (int) (Math.random() * (max - min) + min);
+    }
+
     public static void addQuotation(Quotation quotation) {
         ModelBank<Quotation> bank = DatabaseHelper.getQuotationBank();
         bank.add(quotation);
