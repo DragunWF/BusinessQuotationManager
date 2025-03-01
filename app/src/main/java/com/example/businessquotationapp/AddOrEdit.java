@@ -1,6 +1,8 @@
 package com.example.businessquotationapp;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,10 +60,14 @@ public class AddOrEdit extends AppCompatActivity {
             viewedQuotationId = getIntent().getIntExtra("quotationId", -1);
             if (viewedQuotationId != -1) {
                 autoFillFields();
+            } else {
+                quotationNumberText.setText("Quotation Number: " + QuotationService.generateQuotationNumber());
+                totalAmountText.setText("Total Amount: " + DatabaseHelper.getQuotationBank().get(viewedQuotationId).getTotalAmount());
             }
 
             setButtons();
             setSpinner();
+            setTextWatchers();
         } catch (Exception err) {
             err.printStackTrace();
             Utils.longToast(err.getMessage(), this);
@@ -146,5 +152,44 @@ public class AddOrEdit extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
         statusSpinner.setAdapter(adapter);
+    }
+
+    private void setTextWatchers() {
+        quantityText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int quantity = Integer.parseInt(Utils.getText(quantityText));
+                double price = Double.parseDouble(Utils.getText(priceText));
+                totalAmountText.setText("Total Amount: " + quantity * price + " PHP");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        priceText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int quantity = Integer.parseInt(Utils.getText(quantityText));
+                double price = Double.parseDouble(Utils.getText(priceText));
+                totalAmountText.setText("Total Amount: " + quantity * price + " PHP");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 }
