@@ -17,21 +17,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
 
             <Button
                 android:id="@+id/saveBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Save"
-                android:layout_marginRight="100dp"/>
+                android:text="Save"/>
+
+            <Button
+                android:id="@+id/deleteBtn"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="55dp"
+                android:text="Delete" />
 
             <Button
                 android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Back" />
 
 

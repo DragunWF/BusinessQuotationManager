@@ -22,7 +22,7 @@ import com.example.businessquotationapp.services.QuotationService;
 
 public class AddOrEdit extends AppCompatActivity {
     private TextView quotationNumberText, totalAmountText;
-    private Button saveBtn, backBtn;
+    private Button saveBtn, backBtn, deleteBtn;
     private EditText nameText, phoneNumberText, itemNameText, quantityText, dateText, priceText;
     private Spinner statusSpinner;
 
@@ -48,6 +48,7 @@ public class AddOrEdit extends AppCompatActivity {
 
             saveBtn = findViewById(R.id.saveBtn);
             backBtn = findViewById(R.id.backBtn);
+            deleteBtn = findViewById(R.id.deleteBtn);
 
             nameText = findViewById(R.id.customerNameText);
             phoneNumberText = findViewById(R.id.phoneNumberText);
@@ -93,6 +94,9 @@ public class AddOrEdit extends AppCompatActivity {
     private void setButtons() {
         backBtn.setOnClickListener(v -> {
             finish();
+        });
+        deleteBtn.setOnClickListener(v ->{
+
         });
         saveBtn.setOnClickListener(v -> {
             final int CHAR_LIMIT = 500;
