@@ -1,10 +1,12 @@
 package com.example.businessquotationapp;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -19,6 +21,8 @@ import com.example.businessquotationapp.data.Quotation;
 import com.example.businessquotationapp.helpers.DatabaseHelper;
 import com.example.businessquotationapp.helpers.Utils;
 import com.example.businessquotationapp.services.QuotationService;
+
+import java.util.Calendar;
 
 public class AddOrEdit extends AppCompatActivity {
     private TextView quotationNumberText, totalAmountText;
@@ -146,6 +150,24 @@ public class AddOrEdit extends AppCompatActivity {
 
             Utils.longToast("Quotation saved successfully!", AddOrEdit.this);
             finish();
+        });
+        dateText.setOnClickListener(v -> {
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog dialog = new DatePickerDialog(AddOrEdit.this,
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                            String formattedMonth = String.format("%02d", month + 1);
+                            String formattedDay = String.format("%02d", dayOfMonth);
+                            dateText.setText(year + "-" + formattedMonth + "-" + formattedDay);
+                        }
+                    }, year, month, day);
+
+            dialog.show();
         });
     }
 
