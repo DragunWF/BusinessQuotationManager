@@ -113,11 +113,20 @@ public class AddOrEdit extends AppCompatActivity {
             int formattedQuantity = Integer.parseInt(quantity);
 
             boolean isEditForm = viewedQuotationId != -1;
-            Quotation quotation = new Quotation(customerName, phoneNumber, item, status,
-                    date, formattedPrice, 1, formattedQuantity);
+
             if (isEditForm) {
+                Quotation quotation = DatabaseHelper.getQuotationBank().get(viewedQuotationId);
+                quotation.setCustomerName(customerName);
+                quotation.setPhone(phoneNumber);
+                quotation.setItem(item);
+                quotation.setPrice(formattedPrice);
+                quotation.setQuantity(formattedQuantity);
+                quotation.setDate(date);
+                quotation.setStatus(status);
                 QuotationService.editQuotation(quotation);
             } else {
+                Quotation quotation = new Quotation(customerName, phoneNumber, item, status,
+                        date, formattedPrice, 1, formattedQuantity);
                 QuotationService.addQuotation(quotation);
             }
 
