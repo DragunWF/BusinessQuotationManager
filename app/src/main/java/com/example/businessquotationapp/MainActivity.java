@@ -66,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
             setSpinner();
             setButtons();
             setRecycler();
+
+            DatabaseHelper.addDummyData();
         }
         catch (Exception e){
             e.printStackTrace();
