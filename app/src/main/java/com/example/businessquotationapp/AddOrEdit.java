@@ -96,7 +96,9 @@ public class AddOrEdit extends AppCompatActivity {
             finish();
         });
         deleteBtn.setOnClickListener(v ->{
-
+            QuotationService.deleteQuotation(viewedQuotationId);
+            Utils.longToast("Quotation deleted successfully!", AddOrEdit.this);
+            finish();
         });
         saveBtn.setOnClickListener(v -> {
             final int CHAR_LIMIT = 500;
