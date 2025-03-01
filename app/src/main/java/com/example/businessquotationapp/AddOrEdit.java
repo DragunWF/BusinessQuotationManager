@@ -182,6 +182,11 @@ public class AddOrEdit extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
         statusSpinner.setAdapter(adapter);
+
+        boolean isEditForm = viewedQuotationId != -1;
+        if (isEditForm) {
+            statusSpinner.setSelection(adapter.getPosition(DatabaseHelper.getQuotationBank().get(viewedQuotationId).getStatus()));
+        }
     }
 
     private void setTextWatchers() {

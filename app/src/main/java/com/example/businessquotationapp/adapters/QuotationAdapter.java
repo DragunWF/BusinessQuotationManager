@@ -115,7 +115,7 @@ public class QuotationAdapter extends RecyclerView.Adapter<QuotationAdapter.View
             intent.putExtra("quotationId", quotation.getId());
             context.startActivity(intent);
         });
-        viewHolder.getTotalText().setOnClickListener(v -> {
+        viewHolder.getDuplicateBtn().setOnClickListener(v -> {
             QuotationService.addQuotation(quotation);
             Utils.longToast("Quotation has been successfully duplicated!", context);
             updateLocalDataSet();
