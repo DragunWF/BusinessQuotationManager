@@ -21,6 +21,7 @@ public class Metrics extends AppCompatActivity {
     private TextView conversionRateTxt, pendingAmountTxt, acceptedAmountTxt;
     private int Accepted, Declined;
     private double AcceptedRatio, DeclinedRatio;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +43,9 @@ public class Metrics extends AppCompatActivity {
             setButton();
             getAcceptedRatioPercentage();
             getDeclinedRatioPercentage();
-            conversionRateTxt.setText("Accepted: " + AcceptedRatio +"%" + "Declined" + DeclinedRatio + "%");
-            pendingAmountTxt.setText(QuotationService.getPendingQuotationsCount());
+            conversionRateTxt.setText("Accepted: " + AcceptedRatio +"%" + "| Declined" + DeclinedRatio + "%");
+            pendingAmountTxt.setText(String.valueOf(QuotationService.getPendingQuotationsCount()));
+            acceptedAmountTxt.setText(String.valueOf(QuotationService.getAcceptedQuotationsCount()));
         }
         catch (Exception e){
             e.printStackTrace();
@@ -59,7 +61,7 @@ public class Metrics extends AppCompatActivity {
         Accepted = QuotationService.getAcceptedQuotationsCount();
         Declined = QuotationService.getDeclineQuotationsCount();
 
-        int Total = Accepted + Declined;
+        float Total = Accepted + Declined;
         AcceptedRatio = (Accepted / Total) * 100;
     }
 
@@ -67,7 +69,7 @@ public class Metrics extends AppCompatActivity {
         Accepted = QuotationService.getAcceptedQuotationsCount();
         Declined = QuotationService.getDeclineQuotationsCount();
 
-        int Total = Accepted + Declined;
+        float Total = Accepted + Declined;
         DeclinedRatio = (Declined / Total) * 100;
     }
 }

@@ -33,8 +33,9 @@ public class QuotationService {
     public static int getDeclineQuotationsCount() {
         return getStatusCount("Declined");
     }
+
     public static int getPendingQuotationsCount() {
-        return getStatusCount("Pending");
+        return getStatusCount("Sent");
     }
 
     private static int getStatusCount(String status) {
